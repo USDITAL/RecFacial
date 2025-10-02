@@ -1,0 +1,31 @@
+{
+  "name": "proyecto-daw",
+  "version": "1.0.0",
+  "description": "Proyecto DAW 2024-25",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Isisimone/Proyecto-DAW.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Isisimone/Proyecto-DAW/issues"
+  },
+  "homepage": "https://github.com/Isisimone/Proyecto-DAW#readme",
+  "dependencies": {
+    "axios": "^1.8.4",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "face-api.js": "^0.20.0",
+    "path": "^0.12.7"
+  }
+}

@@ -1,0 +1,37 @@
+sequenceDiagram
+    participant Cliente (Frontend/Backend)
+    participant Servidor (Node.js)
+    participant Servidor (PHP)
+    participant Base de Datos (MySQL)
+
+    Note over Cliente (Frontend/Backend): Interfaz Web con Webcam
+    Cliente (Frontend/Backend)->>Cliente (Frontend/Backend): 1. Captura rostro via Webcam
+    Cliente (Frontend/Backend)->>Cliente (Frontend/Backend): 2. Procesa imagen con Face-API.js (extrae descriptores faciales)
+    Cliente (Frontend/Backend)->>Servidor (Node.js): 3. Envía descriptores (JSON) via AJAX (HTTPS)
+
+    Note over Servidor (Node.js): Comparación Biométrica
+    Servidor (Node.js)->>Servidor (PHP): 4. Solicita datos de usuarios (FETCH)
+    Servidor (PHP)->>Base de Datos (MySQL): 5. Consulta descriptores almacenados (encriptados)
+    Base de Datos (MySQL)-->>Servidor (PHP): 6. Devuelve datos encriptados
+    Servidor (PHP)-->>Servidor (Node.js): 7. Envía datos encriptados
+
+    Servidor (Node.js)->>Servidor (Node.js): 8. Desencripta descriptores (clave privada fuera de entorno web)
+    Servidor (Node.js)->>Servidor (Node.js): 9. Compara descriptores (Face-API.js)
+    alt Similitud ≥ Umbral (ej. 95%)
+        Servidor (Node.js)-->>Cliente (Frontend/Backend): 10. Reconocimiento positivo (JSON: {success: true})
+        Cliente (Frontend/Backend)->>Cliente (Frontend/Backend): 11. Muestra confirmación
+        Servidor (Node.js)->>Servidor (PHP): 12. Registra acceso (POST Marcaje)
+        Servidor (PHP)->>Servidor (PHP): 13. Comprueba último acceso
+        Servidor (PHP)->>Base de Datos (MySQL): 14. Registra acceso o salida
+    else Similitud < Umbral
+        Servidor (Node.js)-->>Cliente (Frontend/Backend): 10. Reconocimiento negativo (JSON: {error: "No match"})
+    end
+
+    Note over Servidor (PHP): Gestión CRUD
+    Note over Cliente (Frontend/Backend): Frontend/Backend Empleado
+    Cliente (Frontend/Backend)->>Servidor (PHP): 15. Envío de datos para login (AJAX)
+    Servidor (PHP)->>Base de Datos (MySQL): 16. Comparación hash con la Base de Datos
+    Servidor (PHP)->>Servidor (PHP): 17. Inicio de sesión
+    Cliente (Frontend/Backend)->>Servidor (PHP): 18. Formularios (AJAX)
+    Servidor (PHP)->>Base de Datos (MySQL): 19. CRUD (Create/Read/Update/Delete)
+    Servidor (PHP)-->>Cliente (Frontend/Backend): 20. Respuesta (JSON/HTML)

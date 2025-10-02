@@ -1,0 +1,142 @@
+@startuml
+class Usuario {
+  +codUsuario: int
+  +nomLogin: string
+  +contrasena: string
+  +correo: string
+  +fec_Alta: date
+  +nom_Usuario_Alta: string
+  +fec_Baja: date
+  +nom_Usuario_Baja:string
+  +compararContrasena(pass: string): boolean
+  +crearUsuario(empleado:int): boolean
+  +bajaUsuario(empelado:int): boolean
+  +modificaUsuario(nombre:string, pass:string): void
+  +generaPassUsuario(): boolean
+}
+
+class Rol {
+  +cod_Rol: int
+  +nom_Rol: string
+  +descripcion: string
+  +fec_Alta: date
+  +nom_Usuario_Alta: string
+  +fec_Baja: date
+  +nom_Usuario: string
+  +privilegios: Privilegio
+  +asignarPermisos(permisos: Privilegio): void
+}
+
+class Privilegio {
+  +empCrear: boolean
+  +empModificar: boolean
+  +empBaja: boolean
+  +usrCrear: booblean
+  +usrModificar: boolean
+  +usrBaja: boolean
+  +usrGenerarPass: boolean
+  +marCrearPropio: boolean
+  +marConsultarPropio: boolean
+  +marCrear: boolean
+  +marAuth: boolean
+  +marModificar: boolean
+  +marConsultar: boolean
+  +marEliminar: boolean
+  +bioCrear: boolean
+  +bioEliminar: boolean
+  +rolCrear: boolean
+  +rolModificar: boolean
+  +rolEliminar: boolean
+  +ajustesModificar: boolean
+}
+
+class Empleado {
+  +cod_Empleado: int
+  +cod_Usuario: int
+  +nombre: string
+  +apellido1: string
+  +apellido2: string
+  +contacto: string
+  +fec_Alta: date
+  +nom_Usuario_Alta: string
+  +fec_Baja: date
+  +nom_Usuario_Baja: string
+  +compararCara(cara:string): boolean
+  +registrarCara(cara:string): int
+  +generarRFID(): string
+  +registrarRFID(rfid: string): int
+  +comparaRFID(rfid: string): bollean
+  +crearEmpleado(): boolean
+  +modificarEmpleado(nuevo: Empleado): boolean
+  +asignarUsuario(usuario:int): void
+  +bajaEmpleado(usuario: Usuario):boolean
+  +asignarBioEmpleado(bio:DatosBiometricos):boolean
+  +eliminarBioEmpleado(idBio: int) void
+}
+
+class Marcaje {
+  +cod_Marcaje: int
+  +cod_Tipo_Marcaje: int
+  +cod_Empleado: int
+  +cod_Bio: int
+  +fec_Marcaje: date
+  +hor_Marcaje: time
+  +fec_Grabacion: date
+  +hor_Grabacion: time
+  +incidencia: boolean
+  +pendiente: boolean
+  +foto: string
+  +tipoAcceso: string
+  +obs: string
+  +registrarMarcaje(fec_Marcaje: date, hor_Marcaje: time): void
+}
+
+class DatosBiometricos {
+  +cod_Bio: int
+  +cod_Empleado: int
+  +cod_Tipo: int
+  +dato_Bio: string
+  +fec_Alta: date
+  +nom_Usuario_Alta: string
+}
+
+class TipoDatoBiometrico {
+  +cod_Tipo_Bio: int
+  +des_Tipo_Bio: string
+  +fec_Alta: date
+  +nom_Usuario_Alta: string
+  +fec_Baja: date
+  +nom_Usuario_Baja: string
+  +esActivo(): boolean
+}
+
+class Transaccion {
+  +cod_Transaccion: int
+  +tip_Trans: string
+  +des_Trans: string
+  +cod_Obj: int
+  +nom_Obj: string
+  +cod_Usuario: int
+  +fec_Sis: date
+  +hor_Sis: time
+  +ip_Usuario: string
+  +crearTransaccion(): boolean
+  +buscarTransaccion(trans:Transaccion): array Transaccion 
+}
+
+class Ajuste {
+  +idAjuste: int
+  +clave: string
+  +valor: string
+  +actualizarAjuste(clave: string, valor: string): void
+}
+
+Usuario "1" -- "1..*" Rol
+Usuario "1" --> "0..1" Empleado
+Empleado "1" -- "1..*" DatosBiometricos
+Empleado "1" -- "0..*" Marcaje
+DatosBiometricos "1" -- "1" TipoDatoBiometrico
+Usuario "1" -- "0..*" Transaccion
+Rol "1" -- "1" Privilegio
+
+@enduml

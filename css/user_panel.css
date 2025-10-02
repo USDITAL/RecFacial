@@ -1,0 +1,53 @@
+.user-panel-container {
+    width: 80%;
+    background: linear-gradient(135deg, #26D0CE, #2486AC);
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.filters {
+    margin-bottom: 20px;
+}
+
+.filters label {
+    margin: 0 10px;
+}
+
+.filters input {
+    margin: 0 10px;
+    padding: 5px;
+}
+
+.filters button {
+    margin: 0 10px;
+    padding: 5px 10px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.filters button:hover {
+    background-color: white;
+}
+
+.records-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.records-table th, .records-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.records-table th {
+    background-color: white;
+    color: #2486AC;
+}
