@@ -1,31 +1,79 @@
-# Proyecto-DAW
+# Proyecto-DAW: Sistema de Fichaje Facial
 
-Proyecto DAW 2024-25
+Sistema integral de control horario y gestión de ausencias basado en reconocimiento facial, desarrollado como proyecto final de DAW para el curso 2024-25.
 
-## Descripción
+---
 
-Este proyecto se basa en el desarrollo de una aplicación para el fichaje facial de empleados de una empresa para llevar un control horario y de ausencias.
-Ideado, diseñado y desarrollado por Raquel.M, Isis.T y David.M
+## 🚀 Descripción del Proyecto
+Este sistema automatiza el registro de jornada laboral mediante el análisis biométrico de los empleados. Al llegar al puesto de trabajo, el sistema captura la imagen del trabajador, procesa su descriptor facial y verifica su identidad de forma segura y cifrada.
 
-## Estructura
+## 🏗️ Arquitectura del Sistema
+El sistema utiliza una arquitectura distribuida que separa la lógica de negocio de la seguridad biométrica:
 
-Las partes más representativas de la estructura de la aplicación son:
+1. **Frontend:** Captura el rostro del empleado y comunica con el servicio de reconocimiento y el backend.
+2. **Node.js (Service):** Procesa el reconocimiento facial utilizando FaceApi. Recibe los datos del frontend, realiza la comparación y devuelve la validación.
+3. **PHP (Backend):** Actúa como orquestador. Gestiona la lógica de negocio, accede a la BBDD MySQL, registra las asistencias y comunica los resultados al usuario.
+4. **Base de Datos:** Almacena la información de empleados, ausencias y descriptores (cifrados).
 
-Un front-end para el perfil de conserje(controlador automático), desarrollado en JavaScript y la librería FaceApi, que tomará la imagen de los empleados según lleguen a su centro
-de trabajo y analizará sus rasgos para generar un descriptor que enviará al servidor para confirmar su identidad. 
+## 🛠️ Tecnologías Utilizadas
 
-Un servidor Node.JS para escuchar las peticiones y realizar las verificaciones en JavaScript comparándo los datos almacenados en la BBDD a través de peticiones REST a PHP.
+### Backend y Base de Datos
+* **PHP 7+**
+* **MySQL** (gestionado con phpMyAdmin)
+* **Composer** (gestión de dependencias)
 
-Un front-end personal en el que podrán consultar sus asistencias y realizar peticiones.
+### Frontend y Servicios
+* **JavaScript**
+* **Node.js**
+* **FaceApi** (reconocimiento facial)
+* **HTML5 / CSS3**
 
-Un back-end donde los administradores podrán realizar altas de empleados, modificaciones de los datos y baja de empleados.
+### Dependencias Principales
+* `setasign/fpdf`: Generación de informes en PDF.
+* `phpmailer/phpmailer`: Envío de notificaciones por email.
+* `dompdf/dompdf`: Conversión de HTML a PDF.
+* `phpunit/phpunit`: Pruebas unitarias.
 
-Una base de datos alojada en el mismo servidor que guardará la información relativa a las ausencias, empleados, entrenamientos faciales, etc...
+## 🔒 Seguridad y Privacidad
+La seguridad es un pilar fundamental del proyecto:
+* **Cifrado:** Todos los vectores biométricos se almacenan cifrados en la base de datos.
+* **Gestión de Claves:** La clave de cifrado reside fuera del espacio web, siendo accesible únicamente por el backend PHP.
+* **Transmisión Segura:** Los datos enviados por la red están protegidos mediante **SSL**.
+* **Privacidad de Datos:** Solo se transmite el vector de la persona presente ante la cámara; nunca se exponen los datos biométricos almacenados en la base de datos.
+* **Concurrencia:** Cada proceso de identificación posee un ID único asociado, permitiendo el manejo de múltiples registros simultáneos sin colisiones.
 
-El frontend del usuario y el backend se puede realizar con PHP (Para la conexión con la base de datos y lógica general) 
-y JavaScript (Para el control de formularios y generación de ventanas) También usará REST para comunicar y actualizar información.
+## 📋 Requisitos Previos
+* **Servidor Web:** Entorno compatible con PHP 7+ y MySQL (Ej: XAMPP, WAMP o un entorno LAMP en Ubuntu).
+* **Node.js:** Instalado en el servidor para ejecutar el servicio de reconocimiento facial.
+* **Composer:** Instalado globalmente o localmente para gestionar las dependencias de PHP.
 
-La base de datos MySQL se administra con el SGBD PHPMyAdmin.
+## ⚙️ Instalación
 
-El servidor puede ser montado en un pc que corra una máquina virtual con Ubuntu donde se instale LAMP y se puede dar acceso externo mediante la aplicación
-NOIP.
+1. **Clonar el repositorio:**
+  ```
+  git clone [https://github.com/USDITAL/RecFacial.git](https://github.com/USDITAL/RecFacial.git)
+  ```
+2. **Instalar dependencias de PHP:**
+Navega a la raíz del proyecto y ejecuta:
+  ```
+  composer install
+  ```
+3. **Configurar la Base de Datos:**
+
+Crea una base de datos en tu servidor MySQL.
+
+Importa el archivo SQL ubicado en docs/BBDD mediante phpMyAdmin.
+
+4. **Levantar el servicio de reconocimiento:**
+
+Navega a la carpeta correspondiente al servicio de Node.js.
+
+Instala los paquetes necesarios: npm install.
+
+Ejecuta el servidor: node server.js.
+
+5. **Configuración de red (Opcional):**
+
+Si el despliegue es en una red local, puedes utilizar servicios como NOIP para obtener acceso externo seguro a tu servidor.
+
+Proyecto desarrollado por Raquel.M, Isis.T y David.M | Curso 2024-25
